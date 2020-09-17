@@ -12,7 +12,7 @@ Solution:
     int answer = 0;
     for(int i=0;i<A.size();i++)
     {
-        answer = answer + (pow(26,i)*((int)A[A.size()-1-i] - 64));// hint : x*26^n + x*26*(n-1) + ...... + x*26^(0).
+        answer = answer + (pow(26,i)*((int)A[A.size()-1-i] - 64));// hint : x*26*(n-1) + ...... + x*26^(0).
     }
     return answer;
 }
