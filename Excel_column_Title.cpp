@@ -1,11 +1,11 @@
-Given a positive integer A, return its corresponding column title as appear in an Excel sheet.
-Problem Constraints
-1 <= A <= 1000000000
-Input Format:
-First and only argument is integer A.
-Output Format:
-Return a string, the answer to the problem.
-Example : 26 --> Z; 30 --> AD;
+// Given a positive integer A, return its corresponding column title as appear in an Excel sheet.
+// Problem Constraints
+// 1 <= A <= 1000000000
+// Input Format:
+// First and only argument is integer A.
+// Output Format:
+// Return a string, the answer to the problem.
+// Example : 26 --> Z; 30 --> AD;
 
 Solution:
   string Solution::convertToTitle(int A) {
