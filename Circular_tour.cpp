@@ -1,4 +1,4 @@
-[Question Link](https://practice.geeksforgeeks.org/problems/circular-tour/1#)
+Question Link: https://practice.geeksforgeeks.org/problems/circular-tour/1#
 
 Solution :
 
