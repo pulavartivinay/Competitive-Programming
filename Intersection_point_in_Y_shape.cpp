@@ -15,7 +15,7 @@ int intersectPoint(Node* head1, Node* head2)
     }
     // now travel the other linked list and check whether it is visited or not
     // if it is visited, then return the curr node value
-    // if any one of the nodes is NULL, then return -1
+    // if there is no common Node in between, then return -1
     Node* travel2 = head2;
     while(travel2 != NULL)
     {
