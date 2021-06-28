@@ -5,6 +5,7 @@ Solution:
 // Recursive Function:
 // F(N) = N if N <= 6
 //      = max( 2*F(N-3), 3*F(N-4), ......., (N-2)*F(1) ) if N >= 7
+// (N - i - 1)*F(i) ---> intuition behind the problem (just expand all possible ways for N = 7)
 long long int keyboardHelper(int& N, vector<long long int>& dp)
 {
     if(dp[N] != -1)
