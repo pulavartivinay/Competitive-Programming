@@ -15,10 +15,6 @@ class LRUCache
     {
         // code here
         this->n = cap;
-        // for(int i=0;i<n;i++)
-        // {
-        //     v.push_back(0);
-        // }
     }
     
     //Function to return value corresponding to the key.
