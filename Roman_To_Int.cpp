@@ -1,46 +1,23 @@
-// Given a string A representing a roman numeral.
-// Convert A into integer.
-// A is guaranteed to be within the range from 1 to 3999.
-// NOTE: Read more
-// details about roman numerals at Roman Numeric System
-// Input Format
-// The only argument given is string A.
-// Output Format
-// Return an integer which is the integer verison of roman numeral string.
-// For Example
-// Input 1:
-//     A = "XIV"
-// Output 1:
-//     14
-// Input 2:
-//     A = "XX"
-// Output 2:
-//     20
-    
+Question Link: https://practice.geeksforgeeks.org/problems/roman-number-to-integer3201/1
+
 Solution:
-  int Solution::romanToInt(string A) {
-    int li = 0;
-    int i = 0;
-    map<char,int> roman_map;
-    roman_map['I'] =   1;
-	roman_map['V'] =   5;
-	roman_map['X'] =  10;
-	roman_map['L'] =  50;
-	roman_map['C'] = 100;
-	roman_map['D'] = 500;
-	roman_map['M'] =1000;
-    while(i < A.size())
-    {
-        if(i+1 < A.size() and roman_map[A[i]] < roman_map[A[i+1]])
-        {
-            li = li + (roman_map[A[i+1]] - roman_map[A[i]]);
-            i = i + 2;
-        }
-        else
-        {
-            li = li + roman_map[A[i]];
-            i = i + 1;
-        }
-    }
-    return li;
+
+int romanToDecimal(string &str) {
+	// code here
+	unordered_map<char, int> m;
+	m['I'] = 1;
+	m['V'] = 5;
+	m['X'] = 10;
+	m['L'] = 50;
+	m['C'] = 100;
+	m['D'] = 500;
+	m['M'] = 1000;
+	int ans = 0;
+	for(int i=0;i<(str.length()-1);i++)
+	{
+	if(m[str[i]] < m[str[i+1]]) ans -= m[str[i]];
+	else ans += m[str[i]];
+	}
+	ans += m[str[str.length()-1]];
+	return ans;
 }
