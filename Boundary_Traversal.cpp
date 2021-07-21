@@ -3,85 +3,70 @@ Question Link: https://practice.geeksforgeeks.org/problems/boundary-traversal-of
 
 Solution Link: 
 
-vector<Node*> leaf;
-    void computeLeaf(Node *root)
+void InOrder(Node* root, vector<int>& leaves)
+{
+    if(root)
     {
-        if(root != NULL)
-        {
-            if(root->left != NULL)
-            {
-                computeLeaf(root->left);
-            }
-            if(root->right != NULL)
-            {
-                computeLeaf(root->right);
-            }
-            
-            if(root->left == NULL && root->right == NULL)
-            {
-                leaf.push_back(root);
-            }
-        }
+        InOrder(root->left, leaves);
+        if(root->left == NULL && root->right == NULL) leaves.push_back(root->data);
+        InOrder(root->right, leaves);
     }
-    
-    vector <int> printBoundary(Node *root)
+}
+vector <int> printBoundary(Node *root)
+{
+    //Your code here
+    vector<int> ans;
+    ans.push_back(root->data);
+    // 1.left nodes
+    Node* travel = root->left;
+    while(travel)
     {
-        //Your code here
-        vector<int> ans;
-        computeLeaf(root);
-        Node* travel = root;
-        //left boundary
-        if(root->left != NULL)
+        if(travel->left)
         {
-            while(travel->left != NULL || travel->right != NULL)
-            {
-                if(travel->left != NULL)
-                {
-                    ans.push_back(travel->data);
-                    travel = travel->left;
-                }
-                else
-                {
-                    ans.push_back(travel->data);
-                    travel = travel->right;
-                }
-            }
+            ans.push_back(travel->data);
+            travel = travel->left;
+        }
+        else if(travel->right)
+        {
+            ans.push_back(travel->data);
+            travel = travel->right;
         }
         else
         {
-            ans.push_back(travel->data);
+            break;
         }
-        
-        //all leaf nodes
-        for(int i=0;i<(leaf.size());i++)
-        {
-            ans.push_back(leaf[i]->data);
-        }
-        vector<int> temp;
-        travel = root->right;
-        //right boundary
-        if(travel != NULL)
-        {
-            while(travel->right != NULL || travel->left != NULL)
-            {
-                if(travel->right != NULL)
-                {
-                    temp.push_back(travel->data);
-                    travel = travel->right;
-                }
-                else
-                {
-                    temp.push_back(travel->data);
-                    travel = travel->left;
-                }
-            }
-            
-            reverse(temp.begin(),temp.end());
-            for(int i=0;i<(temp.size());i++)
-            {
-                ans.push_back(temp[i]);
-            }
-        }
-        
-        return ans;
     }
+    // 2. all leaves
+    vector<int> leaves;
+    InOrder(root, leaves);
+    for(int i=0;i<leaves.size();i++)
+    {
+        ans.push_back(leaves[i]);
+    }
+    // 3. right nodes
+    vector<int> li;
+    travel = root->right;
+    while(travel)
+    {
+        if(travel->right)
+        {
+            li.push_back(travel->data);
+            travel = travel->right;
+        }
+        else if(travel->left)
+        {
+            li.push_back(travel->data);
+            travel = travel->left;
+        }
+        else
+        {
+            break;
+        }
+    }
+    reverse(li.begin(), li.end());
+    for(int i=0;i<li.size();i++)
+    {
+        ans.push_back(li[i]);
+    }
+    return ans;
+}
