@@ -1,23 +1,21 @@
-Question Link: https://practice.geeksforgeeks.org/problems/finding-middle-element-in-a-linked-list/1/?company[]=Amazon&company[]=Amazon&problemType=functional&page=1&sortBy=submissions&query=company[]AmazonproblemTypefunctionalpage1sortBysubmissionscompany[]Amazon
+Question Link: https://leetcode.com/problems/middle-of-the-linked-list/
 
 Solution:
 
-int getMiddle(Node *head)
+ListNode* middleNode(ListNode* head) 
 {
-   // Your code here
-   Node* travel = head;
-   int count = 0;
-   while(travel != NULL)
-   {
-       travel = travel->next;
-       count = count + 1;
-   }
-   int point = (count/2);
-   travel = head;
-   while(point > 0)
-   {
-       travel = travel->next;
-       point = point - 1;
-   }
-   return travel->data;
+  ListNode* slow = NULL;
+  ListNode* fast = NULL;
+  if(head)
+  {
+      slow = head;
+      fast = head;
+  }
+  else return NULL;
+  while(fast != NULL && fast->next != NULL)
+  {
+      slow = slow->next;
+      fast = fast->next->next;
+  }
+  return slow;
 }
