@@ -1,32 +1,17 @@
-# /*Find the contiguous subarray within an array, A of length N which has the largest sum.
-
-# Input Format:
-
-# The first and the only argument contains an integer array, A.
-# Output Format:
-
-# Return an integer representing the maximum possible sum of the contiguous subarray.
-# Constraints:
-
-# 1 <= N <= 1e6
-# -1000 <= A[i] <= 1000
-# For example:
-
-# Input 1:
-#     A = [1, 2, 3, 4, -10]
-
-# Output 1:
-#     10
-
-# Explanation 1:
-#     The subarray [1, 2, 3, 4] has the maximum possible sum of 10. */
+Question Link: https://leetcode.com/problems/maximum-subarray/
     
- Solution:
-    def maxSubArray(self, A):
-        temp_sum =  A[0]
-        answer = A[0]
-       
-        for i in range(1, len(A)): 
-            temp_sum = max(A[i],temp_sum + A[i])
-            answer = max(answer,temp_sum)
-        return answer
+Solution:
+
+int maxSubArray(vector<int>& nums) 
+{
+    int n = nums.size();
+    int ans = nums[0];
+    int curr_ans = nums[0];
+    for(int i=1;i<n;i++) // kadane algorithm
+    {
+        curr_ans = max(nums[i],curr_ans+nums[i]);
+        ans = max(ans, curr_ans);
+    }
+    return ans;
+}
+    
