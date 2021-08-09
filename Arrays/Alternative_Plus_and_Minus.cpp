@@ -1,4 +1,4 @@
-Question Link: https://practice.geeksforgeeks.org/problems/finding-middle-element-in-a-linked-list/1/?company[]=Amazon&company[]=Amazon&problemType=functional&page=1&sortBy=submissions&query=company[]AmazonproblemTypefunctionalpage1sortBysubmissionscompany[]Amazon
+Question Link: https://practice.geeksforgeeks.org/problems/array-of-alternate-ve-and-ve-nos1401/1
 
 Solution:
 
