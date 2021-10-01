@@ -1,28 +1,25 @@
-Question Link: https://practice.geeksforgeeks.org/problems/check-for-bst/1/?company[]=Amazon&company[]=Amazon&problemType=functional&page=1&sortBy=submissions&query=company[]AmazonproblemTypefunctionalpage1sortBysubmissionscompany[]Amazon
+Question Link: https://practice.geeksforgeeks.org/problems/check-for-bst/1
 
 Solution:
 
-void InOrder(Node* root, vector<int>& li)
+bool checkBST(Node* root,int l,int h)
 {
     if(root)
     {
-        InOrder(root->left, li);
-        li.push_back(root->data);
-        InOrder(root->right, li);
+        if(l < root->data && root->data < h)
+        {
+            bool a = checkBST(root->left,l,min(root->data,h));
+            bool b = checkBST(root->right,max(root->data,l),h);comp
+            return (a & b);
+        }
+        else return false;
     }
+    else return true;
 }
 bool isBST(Node* root) 
 {
     // Your code here
-    vector<int> li;
-    InOrder(root, li);
-    int n = li.size();
-    for(int i=0;i<(n-1);i++)
-    {
-        if(li[i] >= li[i+1])
-        {
-            return 0;
-        }
-    }
-    return 1;
+    int l = INT_MIN;
+    int h = INT_MAX;
+    return checkBST(root,l,h);
 }
