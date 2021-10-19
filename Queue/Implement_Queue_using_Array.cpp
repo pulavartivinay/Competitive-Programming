@@ -15,7 +15,6 @@ class MyQueue
       void push(int);
       int pop();
 };
- */
 
 //Function to push an element x in a queue.
 void MyQueue :: push(int x)
