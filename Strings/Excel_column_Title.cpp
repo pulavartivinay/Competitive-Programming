@@ -1,35 +1,24 @@
-// Given a positive integer A, return its corresponding column title as appear in an Excel sheet.
-// Problem Constraints
-// 1 <= A <= 1000000000
-// Input Format:
-// First and only argument is integer A.
-// Output Format:
-// Return a string, the answer to the problem.
-// Example : 26 --> Z; 30 --> AD;
+Question Link: https://practice.geeksforgeeks.org/problems/excel-sheet5448/1#
 
 Solution:
-  string Solution::convertToTitle(int A) {
-    string s;
-    while(A != 0)
-    {
-        int temp = int(A%26);
-        if(temp == 0)//handling when A is 26(alphabet is 'Z')
-        {
-            temp = 26;
-            
-        }
-        A = int(A/26);
-        s = s + (char)(temp+64);//hint: finding remainder,adding 64,converting to corresponding ASCII character and appending it to the string.
-        if(A == 1 and temp == 26)//handling when A is 26(alphabet is 'Z')
-        {
-            break;
-        }
-        if(temp == 26)//handling when A is 26(alphabet is 'Z')
-        {
-            A = A - 1;
-        }
-    }
-    reverse(s.begin(),s.end());//reversing the string
-    return s;
-}
 
+string ExcelColumn(int N)
+{
+    // Your code goes here
+    string ans = "";
+    while(N != 0)
+    {
+        int h = (N%26);
+        if(h == 0)
+        {
+            h = 26;
+        }
+        h--;
+        ans += 'A' + h;
+        N = N/26;
+        if(N == 1 && h == 25) break;
+        if(h == 25) N--;
+    }
+    reverse(ans.begin(), ans.end());
+    return ans;
+}
