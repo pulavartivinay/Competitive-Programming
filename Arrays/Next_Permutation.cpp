@@ -1,26 +1,31 @@
-Question Link: https://practice.geeksforgeeks.org/problems/next-permutation5226/1
+Question Link: https://leetcode.com/problems/next-permutation/description/
 
 Solution:
-
-vector<int> nextPermutation(int N, vector<int> arr)
-{
-    // code here
-    int k = -1;
-    for(int i=0;i<N-1;i++)
-    {
-        if(arr[i] < arr[i+1]) k = i;
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums) {
+        int n = nums.size();
+        int b1 = 0;
+        for(int i=n-1;i>0;i--)
+        {
+            if(nums[i-1] < nums[i]) 
+            {
+                b1 = i-1;
+                break;
+            }
+        }
+        int b2 = 0;
+        for(int i=n-1;i>b1;i--)
+        {
+            if(nums[i] > nums[b1]) 
+            {
+                b2 = i;
+                break;
+            }
+        }
+        //cout << b1 << " " << b2 << endl;
+        swap(nums[b1], nums[b2]);
+        if(b1 == 0 && b2 == 0) reverse(nums.begin(), nums.end());
+        else reverse(nums.begin() + b1 + 1, nums.end());
     }
-    if(k == -1)
-    {
-        sort(arr.begin(), arr.end());
-        return arr;
-    }
-    int l = -1;
-    for(int i=k+1;i<N;i++)
-    {
-        if(arr[k] < arr[i]) l = i;
-    }
-    swap(arr[k], arr[l]);
-    reverse(arr.begin()+k+1, arr.end());
-    return arr;
-}
+};
