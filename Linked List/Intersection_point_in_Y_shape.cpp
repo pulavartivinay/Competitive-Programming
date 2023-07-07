@@ -1,29 +1,43 @@
-Question Link: https://practice.geeksforgeeks.org/problems/intersection-point-in-y-shapped-linked-lists/1#
+Question Link: https://leetcode.com/problems/intersection-of-two-linked-lists/description/
 
-Solution Link:
-
-int intersectPoint(Node* head1, Node* head2)
-{
-    // Your Code Here
-    // visit all the nodes in one linked list
-    unordered_map<Node*, int> li;
-    Node* travel1 = head1;
-    while(travel1 != NULL)
+Solution:
+ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+    int n = 0, m = 0;
+    ListNode *t1 = headA, *t2 = headB;
+    while(t1)
     {
-        li[travel1] = 1;
-        travel1 = travel1->next;
+        t1 = t1->next;
+        n++;
     }
-    // now travel the other linked list and check whether it is visited or not
-    // if it is visited, then return the curr node value
-    // if there is no common Node in between, then return -1
-    Node* travel2 = head2;
-    while(travel2 != NULL)
+    while(t2)
     {
-        if(li[travel2])
+        t2 = t2->next;
+        m++;
+    }
+    t1 = headA, t2 = headB;
+    if(n > m)
+    {
+        int steps = (n - m);
+        while(steps > 0)
         {
-            return travel2->data;
+            t1 = t1->next;
+            steps--;
         }
-        travel2 = travel2->next;
+    } 
+    else 
+    {
+        int steps = (m - n);
+        while(steps > 0)
+        {
+            t2 = t2->next;
+            steps--;
+        }
     }
-    return -1;
+    
+    while(t1 != t2)
+    {
+        t1 = t1->next;
+        t2 = t2->next;
+    }
+    return t1;
 }
