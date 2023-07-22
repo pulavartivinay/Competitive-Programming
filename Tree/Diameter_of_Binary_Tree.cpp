@@ -12,7 +12,8 @@ int getHeight(TreeNode* root, int& ans)
     }
     return 0;
 }
-int diameterOfBinaryTree(TreeNode* root) {
+int diameterOfBinaryTree(TreeNode* root) 
+{
     if(!root) return 0;
     int ans = 1;
     getHeight(root, ans);
