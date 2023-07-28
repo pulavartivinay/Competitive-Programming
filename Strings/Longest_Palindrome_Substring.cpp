@@ -1,52 +1,35 @@
-Question Link: https://practice.geeksforgeeks.org/problems/longest-palindrome-in-a-string1956/1
+Question Link: https://leetcode.com/problems/longest-palindromic-substring/description/
 
 Solution:
-
-string longestPalindrome(string S)
-{
-    // code here 
-    int n = S.length();
-    int start = 0;
-    int count = 0;
+string longestPalindrome(string s) {
+    int n = s.length();
+    int ans = 1, start = 0;
     for(int i=0;i<n;i++)
     {
         // odd palindromes
-        int left = i-1;
-        int right = i+1;
-        int c = 1;
-        while(left>=0 && right<=n-1 && S[left] == S[right])
+        int left = i-1, right = i+1;
+        while(left >= 0 && right < n && s[left] == s[right])
         {
-            c = c+2;
+            if(right - left + 1 > ans) start = left;
+            ans = max(ans, right - left + 1);
             left--;
             right++;
         }
-        if(c>count)
-        {
-            if(left>=0) start = left+1;
-            count = c;
-        }
-        c = 0;
 
         // even palindromes
-        left = i;
-        right = i+1;
-        while(left>=0 && right<=n-1 && S[left] == S[right])
+        left = i, right = i+1;
+        while(left >= 0 && right < n && s[left] == s[right])
         {
-            c = c+2;
+            if(right - left + 1 > ans) start = left;
+            ans = max(ans, right - left + 1);
             left--;
             right++;
         }
-        if(c>count) 
-        {
-            if(left>=0) start = left+1;
-            count = c;
-        }
-        c = 0;
     }
-    string ans = "";
-    for(int i=start;i<(start+count);i++)
+    string s_ans = "";
+    for(int i=start;i<(start+ans);i++)
     {
-        ans += S[i];
+        s_ans += s[i];
     }
-    return ans;
+    return s_ans;
 }
