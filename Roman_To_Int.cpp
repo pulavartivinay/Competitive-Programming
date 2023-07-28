@@ -1,23 +1,24 @@
-Question Link: https://practice.geeksforgeeks.org/problems/roman-number-to-integer3201/1
+Question Link: https://leetcode.com/problems/roman-to-integer/description/
 
 Solution:
-
-int romanToDecimal(string &str) {
-	// code here
-	unordered_map<char, int> m;
-	m['I'] = 1;
-	m['V'] = 5;
-	m['X'] = 10;
-	m['L'] = 50;
-	m['C'] = 100;
-	m['D'] = 500;
-	m['M'] = 1000;
+int romanToInt(string s) {
+	int n = s.length();
 	int ans = 0;
-	for(int i=0;i<(str.length()-1);i++)
+	for(int i=0;i<n;i++)
 	{
-	if(m[str[i]] < m[str[i+1]]) ans -= m[str[i]];
-	else ans += m[str[i]];
+		if(s[i] == 'I') ans++;
+		else if(s[i] == 'V' && (i-1 >= 0 && s[i-1] == 'I')) ans += 3;
+		else if(s[i] == 'V') ans += 5;
+		else if(s[i] == 'X' && (i-1 >= 0 && s[i-1] == 'I')) ans += 8;
+		else if(s[i] == 'X') ans += 10;
+		else if(s[i] == 'L' && (i-1 >= 0 && s[i-1] == 'X')) ans += 30;
+		else if(s[i] == 'L') ans += 50;
+		else if(s[i] == 'C' && (i-1 >= 0 && s[i-1] == 'X')) ans += 80;
+		else if(s[i] == 'C') ans += 100;
+		else if(s[i] == 'D' && (i-1 >= 0 && s[i-1] == 'C')) ans += 300;
+		else if(s[i] == 'D') ans += 500;
+		else if(s[i] == 'M' && (i-1 >= 0 && s[i-1] == 'C')) ans += 800;
+		else if(s[i] == 'M') ans += 1000;
 	}
-	ans += m[str[str.length()-1]];
 	return ans;
 }
