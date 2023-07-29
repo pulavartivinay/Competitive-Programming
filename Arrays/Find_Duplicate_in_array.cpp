@@ -1,27 +1,14 @@
 Question:  https://leetcode.com/problems/find-the-duplicate-number/description/
 
 Solution:
-
-class Solution {
-public:
-    //if there is duplicate in the array, it means there is cycle in the array
-    int findDuplicate(vector<int>& nums) {
-        int n = nums.size();
-        int s = 0, f = 0;
-        s = nums[s];
-        f = nums[nums[f]];
-        while(s != f)
-        {
-            s = nums[s];
-            f = nums[nums[f]];
-        }
-        cout << s << " " << f << endl;
-        f = 0;
-        while(s != f)
-        {
-            s = nums[s];
-            f = nums[f];
-        }
-        return s;
+int findDuplicate(vector<int>& nums) {
+    int n = nums.size();
+    int i = 0;
+    while(i < n)
+    {
+        if (nums[i] != i+1 && nums[i] == nums[nums[i]-1]) return nums[i];
+        else if (nums[i] != i+1) swap(nums[i], nums[nums[i]-1]);
+        else i++;
     }
-};
+    return nums[n];
+}
