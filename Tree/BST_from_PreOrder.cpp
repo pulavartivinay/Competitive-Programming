@@ -1,47 +1,25 @@
-Question Link: https://practice.geeksforgeeks.org/problems/preorder-to-postorder4423/1
+Question Link: https://leetcode.com/problems/construct-binary-search-tree-from-preorder-traversal/description/
 
-Solution Link: 
-
-   //Function that constructs BST from its preorder traversal.
-Node* constructTree(int pre[], int size)
+Solution:
+TreeNode* insertBST(TreeNode* ans, int val)
 {
-    //code here
-    if(size == 0) //Empty tree case
+    if(ans)
     {
-        return NULL;
+        if(val < ans->val) ans->left = insertBST(ans->left, val);
+        else ans->right = insertBST(ans->right, val);
+
+        return ans;
     }
-    vector<Node*> li; //vector of nodes
-    for(int i=0;i<size;i++)
+    else return new TreeNode(val);
+}
+TreeNode* bstFromPreorder(vector<int>& preorder) {
+    int n = preorder.size();
+    TreeNode* ans = NULL;
+    if(n == 0) return ans;
+
+    for(int i=0;i<n;i++)
     {
-        li.push_back(newNode(pre[i]));
+        ans = insertBST(ans, preorder[i]);
     }
-    Node* root = li[0];
-    stack<Node*> li_s; //stack which makes the record of all nodes
-    for(int i=0;i<size;i++)
-    {
-        if(li_s.empty()) //base case (insert the root)
-        {
-            li_s.push(root);
-        }
-        else
-        {
-            if(li_s.top()->data >= li[i]->data) //if the element is lesser then stack top element, then make his left child and push it to the stack.
-            {
-                li_s.top()->left = li[i];
-                li_s.push(li[i]);
-            }
-            else
-            {
-                Node* temp = NULL; //if the element is greater then check for the last popped node while searching for element in stack which is greater than current element and then make as right child for the last popped node and push it to the stack.
-                while(!li_s.empty() && li_s.top()->data < li[i]->data)
-                {
-                    temp = li_s.top();
-                    li_s.pop();
-                }
-                temp->right = li[i];
-                li_s.push(li[i]);
-            }
-        }
-    }
-    return root;
+    return ans;
 }
