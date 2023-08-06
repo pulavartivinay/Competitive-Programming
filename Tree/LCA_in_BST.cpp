@@ -1,14 +1,12 @@
-Question Link: https://www.hackerrank.com/contests/logicmojo-feb23/challenges/binary-search-tree-lowest-common-ancestor/problem
+Question Link: https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/
 
 Solution:
-Node *lca(Node *root, int v1,int v2) 
-{
-    // Write your code here.
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
     if(!root) return root;
-    int a = min(v1, v2);
-    int b = max(v1, v2);
-    if(a < root->data && root->data < b) return root;
-    else if(a < root->data && b < root->data) return lca(root->left, v1, v2);
-    else if(a > root->data && b > root->data) return lca(root->right, v1, v2);
-    return root;
+
+    int a = min(p->val,q->val);
+    int b = max(p->val,q->val);
+    if(a <= root->val && root->val <= b) return root;
+    else if(b < root->val) return lowestCommonAncestor(root->left, p , q);
+    else return lowestCommonAncestor(root->right, p, q);
 }
