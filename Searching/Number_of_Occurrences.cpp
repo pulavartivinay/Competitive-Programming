@@ -5,7 +5,7 @@ int binary_search_first_occur(int arr[], int n, int x)
 {
     int low = 0, high = n-1;
     int ans = -1;
-    
+
     while(low <= high)
     {
         int mid = low + ((high - low)/2);
@@ -38,6 +38,7 @@ int binary_search_last_occur(int arr[], int n, int x)
     }
     return ans;
 }
+
 /* if x is present in arr[] then returns the count
 of occurrences of x, otherwise returns 0. */
 int count(int arr[], int n, int x) {
