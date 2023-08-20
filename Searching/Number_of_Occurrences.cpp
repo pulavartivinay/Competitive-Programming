@@ -38,7 +38,6 @@ int binary_search_last_occur(int arr[], int n, int x)
     }
     return ans;
 }
-
 /* if x is present in arr[] then returns the count
 of occurrences of x, otherwise returns 0. */
 int count(int arr[], int n, int x) {
