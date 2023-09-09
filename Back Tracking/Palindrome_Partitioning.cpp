@@ -1,37 +1,55 @@
 Question Link: https://leetcode.com/problems/palindrome-partitioning/
 
 Solution:
-
-bool isPalindrome(string d)
+int isPalindrome(string s)
 {
-    if(d.length() == 0) return 0;
-    string f = d;
-    reverse(f.begin(),f.end());
-    return (f == d) ? 1 : 0;
-}
-void helper(vector<vector<string>>& ans, vector<string> li, string s, int a, int b)
-{
-    if(a >= b) 
+    int i=0,j=s.length()-1;
+    while(i <= j && s[i] == s[j])
     {
-        ans.push_back(li);
+        i++;
+        j--;
+    }
+    
+    if(i <= j) return false;
+    else return true;
+}
+
+void dp(int i, int n, string s, vector<string> temp_ans, vector<vector<string>>& ans)
+{
+    if(i >= n)
+    {
+        ans.push_back(temp_ans);
         return;
     }
-    for(int i=a;i<b;i++)
+    
+    string temp_s = "";
+    for(int j=i;j<n;j++)
     {
-        string g = s.substr(a, i-a+1);
-        if(isPalindrome(g))
+        temp_s += s[j];
+        if(isPalindrome(temp_s))
         {
-            li.push_back(g);
-            helper(ans, li, s, i+1, b);
-            li.pop_back();
+            temp_ans.push_back(temp_s);
+            dp(j+1, n, s, temp_ans, ans);
+            temp_ans.pop_back();
         }
     }
+    return;
 }
-vector<vector<string>> partition(string s) 
-{
+
+vector<vector<string>> partition(string s, int n) {
     vector<vector<string>> ans;
-    int n = s.length();
-    vector<string> li;
-    helper(ans, li, s, 0, n);
+    
+    string temp_s = "";
+    for(int i=0;i<n;i++)
+    {
+        temp_s += s[i];
+        if(isPalindrome(temp_s))
+        {
+            vector<string> temp_ans;
+            temp_ans.push_back(temp_s);
+            dp(i+1, n, s, temp_ans, ans);
+        }
+    }
+    
     return ans;
 }
