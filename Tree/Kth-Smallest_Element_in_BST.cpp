@@ -1,24 +1,30 @@
-Question Link: https://practice.geeksforgeeks.org/problems/find-k-th-smallest-element-in-bst/1
+Question Link: https://leetcode.com/problems/kth-smallest-element-in-a-bst/
 
 Solution Link:
+void inorder(TreeNode* root, int& k, int &ans)
+{
+    if(root)
+    {
+        inorder(root->left, k, ans);
+        if(k == 1) 
+        {
+            ans = root->val;
+            k--;
+            return;
+        }
+        k--;
+        inorder(root->right, k, ans);
+    }
+    return;
+}
 
-void InOrder(Node* root, vector<int>& li)
+int kthSmallest(TreeNode* root, int k) 
+{
+    if(root)
     {
-        if(root)
-        {
-            InOrder(root->left, li);
-            li.push_back(root->data);
-            InOrder(root->right, li);
-        }
+        int ans = -1;
+        inorder(root, k, ans);
+        return ans;
     }
-    int KthSmallestElement(Node *root, int K)
-    {
-        //add code here.
-        vector<int> li;
-        InOrder(root, li);
-        if(K > li.size())
-        {
-            return -1;
-        }
-        return li[K-1];
-    }
+    return -1;
+}
