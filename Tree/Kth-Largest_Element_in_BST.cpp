@@ -1,30 +1,31 @@
 Question Link: https://practice.geeksforgeeks.org/problems/kth-largest-element-in-bst/1
 
 Solution:
-
-void InOrder_ASC(Node* root, int& K, int& count, int& ans)
+void inorderReverse(Node* root, int&K, int& ans)
 {
     if(root)
     {
-        InOrder_ASC(root->right, K, count, ans);
-        if(count == K)
+        inorderReverse(root->right, K, ans);
+        if(K == 1)
         {
             ans = root->data;
-            count = count + 1; // this is very important. if u miss this statement, then it will always returns the root value. think about it.
+            K--;
             return;
         }
-        else
-        {
-            count = count + 1;
-        }
-        InOrder_ASC(root->left, K, count, ans);
+        K--;
+        inorderReverse(root->left, K, ans);
     }
+    return;
 }
+
 int kthLargest(Node *root, int K)
 {
     //Your code here
-    int count = 1;
-    int ans = 0;
-    InOrder_ASC(root, K, count, ans);
-    return ans;
+    if(root)
+    {
+        int ans = -1;
+        inorderReverse(root, K, ans);
+        return ans;
+    }
+    return -1;
 }
