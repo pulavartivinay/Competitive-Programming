@@ -1,29 +1,29 @@
 Question: https://leetcode.com/problems/subsets-ii/description/
 
 Solution:
-
-class Solution {
-public:
-void recur(int a, int b, vector<int> temp_v, vector<int> nums, set<vector<int>>& s)
-{
-    if(a < b)
-    {
-        //element is not present
-        recur(a+1,b,temp_v,nums,s);
-        //element is present
-        temp_v.push_back(nums[a]);
-        recur(a+1,b,temp_v,nums,s);
-    }
-    else s.insert(temp_v);
-}
 vector<vector<int>> subsetsWithDup(vector<int>& nums) {
     sort(nums.begin(), nums.end());
-    int n = nums.size();
-    set<vector<int>> s;
-    vector<int> temp_v;
-    recur(0,n,temp_v,nums,s);
-    vector<vector<int>> ans(s.begin(), s.end());
-    sort(ans.begin(), ans.end());
+    vector<vector<int>> ans;
+    ans.push_back({});
+    int start = 0, end = 0;
+
+    for(int i=0;i<nums.size();i++)
+    {
+        int n = ans.size();
+
+        // duplicate case handle
+        if(i > 0 && nums[i] == nums[i-1]) start = end+1;
+        else start = 0;
+
+        end = ans.size()-1;
+
+        for(int j=start;j<=end;j++)
+        {
+            vector<int> t = ans[j];
+            t.push_back(nums[i]);
+            ans.push_back(t);
+        }
+    }
+
     return ans;
 }
-};
