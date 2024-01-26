@@ -1,33 +1,53 @@
-Question Link: https://leetcode.com/problems/reverse-nodes-in-k-group/
+Question Link: https://leetcode.com/problems/reverse-nodes-in-k-group/description/
 
 Solution:
-
-SinglyLinkedListNode* ReverseKLL(SinglyLinkedListNode* start, int k) {
-    if((start == NULL) || (start->next == NULL) || (k == 1)) return start;
-    int l = 0;
-    SinglyLinkedListNode* tr = start;
+int findlength(ListNode *head)
+{
+    ListNode *tr = head;
+    int cnt = 0;
     while(tr)
     {
+        cnt++;
         tr = tr->next;
-        l++;
     }
-    SinglyLinkedListNode* dummy = new SinglyLinkedListNode(0);
-    dummy->next = start;
-    
-    SinglyLinkedListNode* prev = dummy, *curr, *nxt;
-    while(l > 0)
+
+    return cnt;
+}
+ListNode* reverseKGroup(ListNode* head, int k) {
+    if(!head) return head;
+    if(k == 1) return head;
+
+    int len = findlength(head);
+
+    ListNode *prev = NULL, *curr = head, *nxt;
+    ListNode *newEnd = head, *last = NULL;
+    ListNode * ans = NULL;
+    int cnt = 0, op = 0;
+    while(curr)
     {
-        curr = prev->next;
         nxt = curr->next;
-        for(int i=1;i<min(l,k);i++)
-        {
-            curr->next = nxt->next;
-            nxt->next = prev->next;
-            prev->next = nxt;
-            nxt = curr->next;
-        }
-        l -= k;
+        curr->next = prev;
         prev = curr;
+        curr = nxt;
+        cnt++;
+
+        if(cnt == k)
+        {
+            if(!ans) ans = prev;
+
+            if(last) last->next = prev;
+            else last = head;
+            prev = NULL;
+            last = newEnd;
+            newEnd = curr;
+            cnt = 0;
+            op++;
+        }
+
+        if(op == (len/k)) break;
     }
-    return dummy->next;
+
+    if(curr) last->next = curr;
+
+    return ans;
 }
