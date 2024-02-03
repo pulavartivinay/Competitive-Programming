@@ -1,26 +1,49 @@
-Question Link: https://practice.geeksforgeeks.org/problems/flood-fill-algorithm1856/1
+Question Link: https://leetcode.com/problems/flood-fill/description/
 
 Solution:
+vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+    int m = image.size(); // rows
+    int n = image[0].size(); // cols
+    int src_col = image[sr][sc];
+    queue<pair<int,int>> q;
+    image[sr][sc] = color;
+    q.push({sr, sc});
+    while(!q.empty())
+    {
+        pair<int,int> p = q.front();
+        int x = p.first;
+        int y = p.second;
+        
+        q.pop();
 
-void DFS(int sr,int sc,vector<vector<int>>& image,int n,int m,int curr_color,int newColor,vector<vector<bool>>& vis)
-{
-    if(sr<0 or sc<0 or sr>=n or sc>=m) return;
-    if(vis[sr][sc]) return;
-    if(image[sr][sc] != curr_color) return;
+        // up
+        if(x-1 >= 0 && image[x-1][y] == src_col && src_col != color)
+        {
+            image[x-1][y] = color;
+            q.push({x-1,y});
+        }
 
-    vis[sr][sc] = 1;
-    image[sr][sc] = newColor;
-    DFS(sr-1,sc,image,n,m,curr_color,newColor,vis); // up
-    DFS(sr+1,sc,image,n,m,curr_color,newColor,vis); // down
-    DFS(sr,sc-1,image,n,m,curr_color,newColor,vis); // left
-    DFS(sr,sc+1,image,n,m,curr_color,newColor,vis); // right
-}
-vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
-    // Code here
-    int n = image.size();
-    int m = image[0].size();
-    int curr_color = image[sr][sc];
-    vector<vector<bool>> vis(n, vector<bool>(m));
-    DFS(sr,sc,image,n,m,curr_color,newColor,vis);
+        // down
+        if(x+1 < m && image[x+1][y] == src_col && src_col != color)
+        {
+            image[x+1][y] = color;
+            q.push({x+1,y});
+        }
+
+        // left
+        if(y-1 >= 0 && image[x][y-1] == src_col && src_col != color)
+        {
+            image[x][y-1] = color;
+            q.push({x,y-1});
+        }
+
+        // right
+        if(y+1 < n && image[x][y+1] == src_col && src_col != color)
+        {
+            image[x][y+1] = color;
+            q.push({x,y+1});
+        }
+    }
+    
     return image;
 }
