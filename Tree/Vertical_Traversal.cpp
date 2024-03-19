@@ -1,34 +1,51 @@
-Question Link: https://practice.geeksforgeeks.org/problems/print-a-binary-tree-in-vertical-order/1/
+Question Link: https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/description/
 
+Solution:
+vector<vector<int>> verticalTraversal(TreeNode* root) {
+    vector<vector<int>> ans;
 
-Solution Link:
+    if(!root) return ans;
 
-static bool comp(vector<int> a, vector<int> b)
-{
-    return (a[0] < b[0]);
-}
-vector<int> verticalOrder(Node *root)
-{
-    //Your code here
-    vector<vector<int>> v;
-    queue<pair<Node*,vector<int>>> q;
-    int dist = 1000;
-    q.push({root,{dist, root->data}});
+    unordered_map<int, unordered_map<int, vector<int>>> mp;
+    int min_row = INT_MAX, max_row = INT_MIN;
+    int min_col = INT_MAX, max_col = INT_MIN;
+    queue<pair<TreeNode*, vector<int>>> q;
+    q.push({root, {0,0}});
+
     while(!q.empty())
     {
-        auto d = q.front();
+        pair<TreeNode*, vector<int>> p = q.front();
         q.pop();
-        Node* j = d.first;
-        if(j->left) q.push({j->left,{d.second[0] - 1, j->left->data}});
-        if(j->right) q.push({j->right,{d.second[0] + 1, j->right->data}});
+        TreeNode* curr = p.first;
+        int row = p.second[0];
+        int col = p.second[1];
 
-        v.push_back(d.second);
+        mp[row][col].push_back(curr->val);
+
+        
+        min_row = min(min_row, row);
+        max_row = max(max_row, row);
+
+        min_col = min(min_col, col);
+        max_col = max(max_col, col);
+
+        if(curr->left) q.push({curr->left, {row+1, col-1}});
+        if(curr->right) q.push({curr->right, {row+1, col+1}});
     }
-    stable_sort(v.begin(), v.end(), comp);
-    vector<int> ans;
-    for(int i=0;i<v.size();i++)
+
+    for(int i=min_col; i<=max_col;i++)
     {
-        ans.push_back(v[i][1]);
+        vector<int> temp;
+        for(int j=min_row; j<=max_row;j++)
+        {
+            if(mp[j][i].size() != 0)
+            {
+                sort(mp[j][i].begin(), mp[j][i].end());
+                for(int k=0;k<mp[j][i].size();k++) temp.push_back(mp[j][i][k]);
+            }
+        }
+        ans.push_back(temp);
     }
+
     return ans;
 }
