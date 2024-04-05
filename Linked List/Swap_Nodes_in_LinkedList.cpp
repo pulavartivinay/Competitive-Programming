@@ -1,18 +1,15 @@
-Question Link: https://practice.geeksforgeeks.org/problems/pairwise-swap-elements-of-a-linked-list-by-swapping-data/1
+Question Link: https://leetcode.com/problems/swap-nodes-in-pairs/description/?envType=list&envId=xler4hke
 
-Solution:
-Node* pairWiseSwap(struct Node* head) 
-{
-    // The task is to complete this method
-    struct Node *nxt = NULL, *tmp = NULL;
-    if(head && head->next) 
-    {
-        nxt = pairWiseSwap(head->next->next);
-        tmp = head->next;
-        head->next = nxt;
-        tmp->next = head;
-        head = tmp;
-    }
-    
-    return head;
+Solution:ListNode* swapPairs(ListNode* head) {
+    if(!head) return head;
+    if(!head->next) return head;
+
+    ListNode* first = head;
+    ListNode* second = head->next;
+    ListNode* rem = swapPairs(second->next);
+
+    second->next = first;
+    first->next = rem;
+
+    return second;
 }
