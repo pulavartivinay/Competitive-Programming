@@ -1,77 +1,34 @@
-Question Link: https://practice.geeksforgeeks.org/problems/connect-nodes-at-same-level/1/
+Question Link: https://www.geeksforgeeks.org/problems/connect-nodes-at-same-level/1
 
-Solution Link:
-
-class Solution
+Solution:
+void connect(Node *root)
 {
-    public:
-    //Function to connect nodes at same level.
-    map<Node*, int> arr;
-    void computeHeight(Node* root)
-    {
-        if(root)
-        {
-            if(root->left)
-            {
-                arr[root->left] = arr[root] + 1;
-                computeHeight(root->left);
-            }
-            if(root->right)
-            {
-                arr[root->right] = arr[root] + 1;
-                computeHeight(root->right);
-            }
-        }
-    }
-    void connect(Node *root)
-    {
-       // Your Code Here
-      arr[root] = 1;
-      computeHeight(root);
-      vector<Node*> q;
-      q.push_back(root);
-      while(q.size() != 0)
-      {
-          if(q.size() == 1)
-          {
-              q[0]->nextRight = NULL;
-              if(q[0]->left)
-              {
-                  q.push_back(q[0]->left);
-              }
-              if(q[0]->right)
-              {
-                  q.push_back(q[0]->right);
-              }
-              q.erase(q.begin());
-          }
-          else if(arr[q[0]] != arr[q[1]])
-          {
-              q[0]->nextRight = NULL;
-              if(q[0]->left)
-              {
-                  q.push_back(q[0]->left);
-              }
-              if(q[0]->right)
-              {
-                  q.push_back(q[0]->right);
-              }
-              q.erase(q.begin());
-          }
-          else
-          {
-              q[0]->nextRight = q[1];
-              if(q[0]->left)
-              {
-                  q.push_back(q[0]->left);
-              }
-              if(q[0]->right)
-              {
-                  q.push_back(q[0]->right);
-              }
-              q.erase(q.begin());
-          }
-      }
-    }    
-      
-};
+   // Your Code Here
+   queue<pair<Node*, int>> q;
+   q.push({root, 1});
+   Node* prev = NULL;
+   int tree_lvl = 0;
+   
+   while(!q.empty())
+   {
+       pair<Node*, int> p = q.front();
+       q.pop();
+       Node* curr = p.first;
+       int curr_lvl = p.second;
+       
+       if(tree_lvl != curr_lvl) 
+       {
+           prev = NULL;
+           tree_lvl = curr_lvl;
+       }
+       else
+       {
+           // set curr to prev nextRight node
+           prev->nextRight = curr;
+       }
+       prev = curr;
+       
+       if(curr->left) q.push({curr->left, curr_lvl+1});
+       if(curr->right) q.push({curr->right, curr_lvl+1});
+   }
+}
