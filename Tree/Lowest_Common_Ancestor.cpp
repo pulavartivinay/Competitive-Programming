@@ -1,20 +1,16 @@
-Question Link: https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/description/
+Question Link: https://www.geeksforgeeks.org/problems/lowest-common-ancestor-in-a-binary-tree/1
 
 Solution:
-TreeNode* findPorQ(TreeNode* root, TreeNode* p, TreeNode* q)
+Node* lca(Node* root ,int n1 ,int n2 )
 {
-    if(root)
-    {
-        TreeNode* a = findPorQ(root->left, p, q);
-        TreeNode* b = findPorQ(root->right, p, q);
-
-        if(a && b) return root;
-        else if(root->val == p->val | root->val == q->val) return root;
-        else return (a ? a : b);
-    }
-    else return NULL;
-}
-TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-    if(!root) return NULL;
-    return findPorQ(root, p, q);
+   //Your code here
+   Node *l = NULL, *r = NULL;
+   if(root->data == n1 || root->data == n2) return root;
+   if(root->left) l = lca(root->left, n1, n2);
+   if(root->right) r = lca(root->right, n1, n2);
+   
+   if(l && r) return root;
+   else if(l && !r) return l;
+   else if(!l && r) return r;
+   else return NULL;
 }
