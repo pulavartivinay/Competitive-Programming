@@ -1,21 +1,23 @@
-Question Link: https://leetcode.com/problems/balanced-binary-tree/description/
+Question Link: https://www.geeksforgeeks.org/problems/check-for-balanced-tree/1
 
 Solution:
-int getHeight(TreeNode* root, bool& ans)
+int checkIsBalanced(Node* root)
 {
-    if(!ans) return 0;
-    if(root)
-    {
-        int a = getHeight(root->left, ans);
-        int b = getHeight(root->right, ans);
-        if (abs(a - b) > 1) ans = false;
-        return 1 + max(a,b);
-    }
-    return 0;
+    if(!root) return 0;
+    
+    int l = checkIsBalanced(root->left);
+    if(l == -1) return -1;
+    
+    int r = checkIsBalanced(root->right);
+    if(r == -1) return -1;
+    
+    if(abs(l-r) > 1) return -1;
+    else return (max(l,r)+1);
 }
-bool isBalanced(TreeNode* root) {
+bool isBalanced(Node *root)
+{
+    //  Your Code here
     if(!root) return true;
-    bool ans = true;
-    getHeight(root, ans);
-    return ans;
+    if(checkIsBalanced(root) >= 0) return true;
+    else return false;
 }
