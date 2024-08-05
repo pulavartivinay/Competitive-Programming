@@ -1,36 +1,35 @@
-Question: https://www.hackerrank.com/contests/logicmojo-feb23/challenges/bottom-view-of-binary-tree/problem
+Question: https://www.geeksforgeeks.org/problems/bottom-view-of-binary-tree/1
 
 Solution:
-int main() {
-    /* Enter your code here. Read input from STDIN. Print output to STDOUT */
-    int n;
-    cin >> n;
-    vector<int> arr(n,0);
-    for(int i=0;i<n;i++)
-    {
-        cin >> arr[i];
-    }
+vector <int> bottomView(Node *root)
+{
+    // Your Code Here
+    map<int, int> mp;
+    queue<pair<Node*, int>> q;
     
-    map<int,int> m;
-    queue<pair<int,int>> q;
-    q.push({0,0});
+    q.push({root, 0});
+    // level order traversal
     while(!q.empty())
     {
-        pair<int,int> p = q.front();
-        int curr_ind = p.first;
-        int curr_line = p.second;
-        
-        m[curr_line] = arr[curr_ind];
-        
-        if(2*curr_ind+1 < n && arr[2*curr_ind+1] != -1) q.push({2*curr_ind+1, curr_line-1});
-        if(2*curr_ind+2 < n && arr[2*curr_ind+2] != -1) q.push({2*curr_ind+2, curr_line+1});
-        
+        pair<Node*, int> p = q.front();
         q.pop();
+        
+        Node* curr = p.first;
+        int lvl = p.second;
+        
+        //update the map
+        mp[lvl] = curr->data;
+        
+        if(curr->left) q.push({curr->left, lvl-1});
+        if(curr->right) q.push({curr->right, lvl+1});
     }
     
-    for(auto it:m)
+    vector<int> ans;
+    for(ele : mp)
     {
-        cout << it.second << endl;
+        //cout << ele.first << " " << ele.second << endl;
+        ans.push_back(ele.second);
     }
-    return 0;
+    
+    return ans;
 }
