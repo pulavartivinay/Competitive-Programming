@@ -2,27 +2,20 @@ Question Link: https://leetcode.com/problems/reverse-words-in-a-string/descripti
 
 Solution:
 string reverseWords(string s) {
-    int n = s.length();
-    string temp = "";
-    string ans = "";
-    for(int i=0;i<n;i++)
+    int n = s.length(), left = 0, right = 0, i = 0;
+
+    reverse(s.begin(), s.end());
+    while(i < n)
     {
-        if(s[i] != ' ') temp += s[i];
-        else
-        {
-            if(temp != "") 
-            {
-                if(ans != "") ans = temp + " " + ans;
-                else ans = temp;
-            }
-            temp = "";
-        }
-    }
-    if(temp != "") 
-    {
-        if (ans != "") ans = temp + " " + ans;
-        else ans = temp;
+        while(i < n && s[i] == ' ') i++;
+        if(i == n) break;
+
+        while(i < n && s[i] != ' ') s[right++] = s[i++];
+        reverse(s.begin()+left, s.begin()+right);
+        s[right++] = ' ';
+        left = right;
     }
 
-    return ans;
+    s.resize(right-1);
+    return s;
 }
