@@ -12,7 +12,6 @@ bool isPossible(vector<int>& nums, int n, int m, int k)
     }
     return false;
 }
-
 int maximumBeauty(vector<int>& nums, int k) {
     int n = nums.size();
     sort(nums.begin(), nums.end());
