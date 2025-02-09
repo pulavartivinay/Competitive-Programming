@@ -11,7 +11,7 @@ string removeStars(string s) {
         {
             if(!st.empty()) st.pop();
         }
-        else st.push(s[i]);
+        else st.push(s[i]); 
     }
 
     string ans = "";
