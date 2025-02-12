@@ -1,6 +1,6 @@
 Question Link: https://leetcode.com/problems/max-sum-of-a-pair-with-equal-sum-of-digits/description/
 
-Solution:
+Solution: 
 int getSum(int num)
 {
     int ans = 0;
