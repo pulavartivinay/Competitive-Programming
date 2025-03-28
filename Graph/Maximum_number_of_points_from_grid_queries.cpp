@@ -6,7 +6,7 @@ struct comp1
     bool operator()(pair<int, int> p1, pair<int, int> p2)
     {
         return (p1.first > p2.first);
-    }
+    } 
 };
 vector<int> maxPoints(vector<vector<int>>& grid, vector<int>& queries) {
     int r = grid.size(), c = grid[0].size();
