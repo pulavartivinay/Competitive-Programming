@@ -1,29 +1,26 @@
 Question Link: https://leetcode.com/problems/climbing-stairs/
 
 Solution:
-
-int DP(int n, vector<int>& store)
+int f(int i, vector<int>& dp)
 {
-    if(n <= 0) return 0;
-    if(store[n] != 0) return store[n];
+    if(i == 0) return 1;
+    if(i <= 0) return 0;
 
-    if(n == 1)
-    {
-        store[1] = 1;
-        return store[1];
-    }
-    else if(n == 2)
-    {
-        store[2] = 2;
-        return store[2];
-    }
-    else
-    {
-        store[n] = DP(n-1, store) + DP(n-2, store);
-        return store[n];
-    }
+    if(dp[i] != -1) return dp[i];
+
+    return dp[i] = f(i-1, dp) + f(i-2, dp);
 }
 int climbStairs(int n) {
-    vector<int> store(46,0);
-    return DP(n, store);    
+    vector<int> dp(n+1, 0);
+    // return f(n, dp);
+
+    int a = 1, b = 1, c = 1;
+    for(int i=2;i<=n;i++)
+    {
+        c = b + a;
+        a = b;
+        b = c;
+    }
+
+    return c;
 }
