@@ -1,49 +1,36 @@
 Question Link: https://leetcode.com/problems/flood-fill/description/
 
 Solution:
+bool isValid(int r, int c, vector<vector<int>>& image)
+{
+    int n = image.size(), m = image[0].size();
+    return (r >= 0 && r < n && c >= 0 && c < m);
+}
 vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
-    int m = image.size(); // rows
-    int n = image[0].size(); // cols
-    int src_col = image[sr][sc];
-    queue<pair<int,int>> q;
+    int n = image.size(), m = image[0].size(), x, y;
+    vector<vector<int>> dirs = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+    queue<pair<int, int>> q;
+    int orig_color = image[sr][sc];
+    if(orig_color == color) return image;
     image[sr][sc] = color;
     q.push({sr, sc});
+
     while(!q.empty())
     {
-        pair<int,int> p = q.front();
-        int x = p.first;
-        int y = p.second;
-        
+        pair<int, int> p = q.front();
         q.pop();
+        x = p.first, y = p.second;
 
-        // up
-        if(x-1 >= 0 && image[x-1][y] == src_col && src_col != color)
+        for(int i=0;i<4;i++)
         {
-            image[x-1][y] = color;
-            q.push({x-1,y});
-        }
-
-        // down
-        if(x+1 < m && image[x+1][y] == src_col && src_col != color)
-        {
-            image[x+1][y] = color;
-            q.push({x+1,y});
-        }
-
-        // left
-        if(y-1 >= 0 && image[x][y-1] == src_col && src_col != color)
-        {
-            image[x][y-1] = color;
-            q.push({x,y-1});
-        }
-
-        // right
-        if(y+1 < n && image[x][y+1] == src_col && src_col != color)
-        {
-            image[x][y+1] = color;
-            q.push({x,y+1});
+            int d_x = x + dirs[i][0], d_y = y + dirs[i][1];
+            if(isValid(d_x, d_y, image) && image[d_x][d_y] == orig_color)
+            {
+                image[d_x][d_y] = color;
+                q.push({d_x, d_y});
+            } 
         }
     }
-    
+
     return image;
 }
