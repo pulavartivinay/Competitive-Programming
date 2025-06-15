@@ -1,34 +1,32 @@
 Question Link: https://leetcode.com/problems/is-graph-bipartite/description/
 
 Solution:
-bool DFS(int src, int col, vector<vector<int>>& graph, vector<int>& color)
+bool DFS(int src, vector<int>& col, vector<vector<int>>& graph)
 {
-    color[src] = col;
-
-    bool ans = true;
-    for(int i=0;i<graph[src].size();i++)
+    for(int v:graph[src])
     {
-        if(color[graph[src][i]] == -1) 
+        if(col[src] == col[v]) return false;
+        if(col[v] == -1)
         {
-            ans = DFS(graph[src][i], !col, graph, color);
-            if(!ans) return ans;
+            col[v] = !col[src];
+            if(!DFS(v, col, graph)) return false;
         }
-        else if(col == color[graph[src][i]]) return false;
     }
 
     return true;
 }
-
 bool isBipartite(vector<vector<int>>& graph) {
-    int V = graph.size();
-
-    vector<int> color(V, -1);
-    bool ans = true;
-    for(int i=0;i<V;i++)
+    int n = graph.size();
+    // -1 --> no color, 0 --> red, 1 -->  blue
+    vector<int> col(n, -1);
+    for(int i=0;i<n;i++)
     {
-        if(color[i] == -1) ans = DFS(i, 0, graph, color);
-        if(!ans) return ans;
+        if(col[i] == -1)
+        {
+            col[i] = 0;
+            if(!DFS(i, col, graph)) return false;
+        }
     }
 
-    return ans;
+    return true;
 }
